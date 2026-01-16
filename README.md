@@ -457,3 +457,7 @@ If you have any questions or need help, feel free to:
 ⭐ Star this repo if you find it helpful!
 
 </div>
+
+## Optional Firebase Chat Notifications
+
+Opt-in browser notifications for signed-in users in public chat rooms, backed by Firebase Cloud Messaging and the existing Node.js/MongoDB API. Requires Firebase configuration before live delivery. See [setup and verification](docs/firebase-notifications.md).
