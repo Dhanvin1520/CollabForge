@@ -7,6 +7,8 @@ const cors = require('cors');
 const path = require('path');
 
 const ChatMessage = require('./models/ChatMessage');
+const jwt = require('jsonwebtoken');
+const { sendChatPush } = require('./services/push');
 
 const authRoutes = require('./routes/auth');
 const taskRoutes = require('./routes/tasks');
@@ -166,6 +168,7 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/notes', noteRoutes);
@@ -280,6 +283,14 @@ io.on('connection', (socket) => {
       });
       removeFallbackMessage(normalizedRoomId, message?.clientMessageId);
       io.to(normalizedRoomId).emit('newMessage', payload);
+      // Only authenticated senders trigger push; existing guest chat remains available.
+      try {
+        const identity = jwt.verify(socket.handshake.auth?.token, process.env.JWT_SECRET);
+        if (identity.user?.id) {
+          void sendChatPush(normalizedRoomId, identity.user.id, saved._id)
+            .catch(() => console.error('Chat notification delivery failed'));
+        }
+      } catch { /* Guest or expired session: no push fan-out. */ }
       if (typeof callback === 'function') {
         callback({ ok: true, message: payload });
       }

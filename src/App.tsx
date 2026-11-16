@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import Dashboard from './components/Layout/Dashboard';
 import Swiss3DBackground from './components/Swiss3DBackground';
 import api from './lib/api';
+import { disableNotifications } from './lib/notifications';
 
 function App() {
   const [forceAuthScreen, setForceAuthScreen] = useState(() => localStorage.getItem('forceAuthScreen') === 'true');
@@ -25,6 +26,14 @@ function App() {
 
   useEffect(() => {
 
+    const room = new URLSearchParams(window.location.search).get('chatRoom');
+    if (room && ['nst-commons', 'nst-placements'].includes(room)) {
+      localStorage.setItem('chat_room', room);
+      localStorage.setItem('activeSection', 'Chat');
+      window.history.replaceState(null, '', window.location.pathname);
+      window.location.reload();
+      return;
+    }
     document.documentElement.setAttribute('data-theme', 'light');
     document.documentElement.classList.remove('dark');
     document.documentElement.classList.add('light');
@@ -64,7 +73,11 @@ function App() {
     }
   }, [activateGuestMode, forceAuthScreen, isAuthenticated]);
 
-  const handleSetIsAuthenticated = (value: boolean) => {
+  const handleSetIsAuthenticated = async (value: boolean) => {
+    if (!value) {
+      try { await disableNotifications(); }
+      catch { window.alert('Could not disable notifications. Retry signing out, or revoke notification permission in browser settings.'); return; }
+    }
     setIsAuthenticated(value);
     if (!value) {
       localStorage.removeItem('token');

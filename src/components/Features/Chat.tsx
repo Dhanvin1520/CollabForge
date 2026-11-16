@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Send, User as UserIcon, WifiOff } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import api from '../../lib/api';
+import NotificationSettings from '../NotificationSettings';
 
 interface Message {
   id: string;
@@ -112,6 +113,7 @@ export default function Chat() {
       if (!mounted) return;
 
       socket = io(SOCKET_URL, {
+        auth: { token: localStorage.getItem('token') },
         transports: ['websocket'],
         reconnection: false,
         autoConnect: true,
@@ -341,6 +343,7 @@ export default function Chat() {
         </div>
       </div>
 
+      <NotificationSettings roomId={selectedRoom} />
       {!connected && (
         <TerminalBanner
           title="Establishing secure channel..."
