@@ -1,78 +1,47 @@
-# B-Tech Buddy Backend
+# CollabForge Backend
 
-Backend service for the B-Tech Buddy application, built with Node.js, Express, and MongoDB.
+Node.js, Express, MongoDB and Socket.io services for the CollabForge collaboration workspace.
 
-## Prerequisites
+## Local setup
 
-- Node.js 18 or higher
-- npm or yarn
-- MongoDB Atlas account (for production)
-- Docker (for containerization)
-
-## Environment Variables
-
-Copy `.env.example` to `.env` and update the values:
+Use Node.js 22 or later for the current Firebase Admin dependency. From this directory:
 
 ```bash
-cp .env.example .env
+npm install
 ```
 
-Update the following variables in `.env`:
-- `MONGODB_URI`: Your MongoDB connection string
-- `JWT_SECRET`: A secure secret key for JWT
-- `PORT`: Port to run the server on (default: 5000)
+Create `.env` with:
 
-## Local Development
+```dotenv
+MONGODB_URI=mongodb://127.0.0.1:27017/collabforge
+JWT_SECRET=replace-with-a-long-random-secret
+PORT=5000
+FRONTEND_URL=http://localhost:5173
+```
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+Run `npm run dev` for development or `node server.js` to start the server directly.
 
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
+## Services
 
-## Building with Docker
+- JWT authentication and password hashing.
+- User-scoped task, note and coding-practice APIs.
+- Socket.io community chat and WebRTC signaling.
+- Optional Firebase Cloud Messaging registration and delivery.
 
-1. Build the Docker image:
-   ```bash
-   docker build -t btech-buddy-backend .
-   ```
+Health endpoint: `GET /api/health`.
 
-2. Run the container:
-   ```bash
-   docker run -p 5000:5000 --env-file .env btech-buddy-backend
-   ```
+## Firebase
 
-## Deployment to Render
+See [notification setup](../docs/firebase-notifications.md). Set Firebase Admin credentials only in backend environment variables. The app can run without Firebase; notification registration stays disabled until configured.
 
-1. Push your code to a GitHub repository
-2. Go to [Render Dashboard](https://dashboard.render.com/)
-3. Click "New" and select "Web Service"
-4. Connect your GitHub repository
-5. Configure the service:
-   - Name: `btech-buddy-backend`
-   - Region: Choose the closest to your users
-   - Branch: `main` or your production branch
-   - Build Command: `npm install`
-   - Start Command: `node server.js`
-   - Environment Variables: Add all variables from `.env`
-6. Click "Create Web Service"
+Run notification tests from this directory:
 
-## API Documentation
+```bash
+node --test tests/notifications.test.js
+```
 
-The API will be available at `https://btech-buddy-backend.onrender.com/api` (or your custom domain)
+## Hosting
 
-## Environment Variables Reference
+On Render, use `backend` as the root directory, `npm install` as the build command and `node server.js` as the start command. Configure MongoDB, JWT and frontend origin settings in the host environment.
 
-- `NODE_ENV`: Environment (development/production)
-- `PORT`: Port to run the server on
-- `MONGODB_URI`: MongoDB connection string
-- `JWT_SECRET`: Secret key for JWT
-- `CORS_ORIGIN`: Allowed origin for CORS
-
-## License
-
-MIT
+The repository includes Docker configuration. Existing service names and deployed URLs may retain legacy names; the product name is CollabForge.

@@ -1,7 +1,7 @@
 {
-  "name": "ultimate-b-tech-buddy-backend",
+  "name": "collabforge-backend",
   "version": "1.0.0",
-  "description": "Backend for Ultimate B-Tech Buddy",
+  "description": "Node.js API and real-time services for CollabForge",
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",

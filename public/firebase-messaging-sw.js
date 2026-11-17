@@ -13,7 +13,7 @@ firebase.initializeApp(Object.fromEntries(['apiKey', 'projectId', 'messagingSend
 firebase.messaging().onBackgroundMessage(async payload => {
   const data = payload.data || {};
   if (!['nst-commons', 'nst-placements'].includes(data.roomId)) return;
-  await self.registration.showNotification('PeerSpace', {
+  await self.registration.showNotification('CollabForge', {
     body: 'New activity in your subscribed chat room.',
     tag: `chat-${data.messageId}`, data: { roomId: data.roomId }
   });

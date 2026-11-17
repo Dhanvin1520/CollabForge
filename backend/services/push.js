@@ -29,7 +29,7 @@ async function sendChatPush(roomId, senderId, messageId) {
   for (let i = 0; i < records.length; i += 500) {
     const tokens = records.slice(i, i + 500).map(r => r.token);
     const result = await client.sendEachForMulticast({ tokens, data: {
-      title: 'PeerSpace', body: 'New activity in your subscribed chat room.', roomId, messageId: String(messageId)
+      title: 'CollabForge', body: 'New activity in your subscribed chat room.', roomId, messageId: String(messageId)
     }, webpush: { headers: { TTL: '300' } } });
     const expired = invalidTokens(tokens, result.responses);
     if (expired.length) await Subscription.deleteMany({ token: { $in: expired } });

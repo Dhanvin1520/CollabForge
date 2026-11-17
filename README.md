@@ -1,463 +1,148 @@
-# 🎓 Unified Virtual Study Collaboration Workspace 
+# CollabForge
 
-> Your all-in-one productivity companion for engineering students - study smarter, not harder!
+**A full-stack study and collaboration workspace built with React, TypeScript, Node.js, Express and MongoDB.**
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ultimate-b-tech-buddy-6bha.vercel.app/)
-[![React](https://img.shields.io/badge/React-18.2.0-blue)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-Backend-green)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)](https://www.mongodb.com/)
+Manage tasks and notes, chat in campus rooms, join video sessions and track coding practice from one dashboard.
 
-**🌐 Live Website:** [https://ultimate-b-tech-buddy-6bha.vercel.app/](https://ultimate-b-tech-buddy-6bha.vercel.app/)
+[Live Demo](https://ultimate-b-tech-buddy-6bha.vercel.app/) · [Source Code](https://github.com/Dhanvin1520/CollabForge) · [Firebase Setup](docs/firebase-notifications.md)
 
----
+> The existing deployment URLs retain their original hosting names. The application and repository brand is **CollabForge**.
 
-## 📋 Table of Contents
+## Features
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [Project Structure](#-project-structure)
-- [API Endpoints](#-api-endpoints)
-- [Contributing](#-contributing)
-- [License](#-license)
+| Area | Implementation |
+| --- | --- |
+| Dashboard | Responsive React and TypeScript interface with navigation for study tools |
+| Authentication | JWT login, password hashing and protected backend routes; guest mode for exploring the app |
+| Tasks and notes | Express REST endpoints and user-scoped MongoDB records |
+| Community chat | Socket.io messaging in NST Commons and NST Placements, with stored message history |
+| Video rooms | WebRTC calling with Socket.io signaling and configurable STUN/TURN servers |
+| Coding practice | LeetCode tracking and activity visualization |
+| Study utilities | Calendar, focus timer, music interface, games and resume interface |
+| AI assistant | Gemini-backed chat interface; requires provider configuration |
+| Browser alerts | Optional Firebase Cloud Messaging notifications for signed-in users; requires Firebase configuration |
 
----
+## Architecture
 
-## 🎯 Overview
-
-**Ultimate B-Tech Buddy** is a comprehensive productivity platform designed specifically for engineering students. It combines essential tools like task management, note-taking, LeetCode tracking, music player, video chat, and AI chatbot - all in one beautiful, Swiss-design-inspired interface.
-
-Whether you're preparing for placements, managing assignments, or collaborating with peers, this platform has everything you need to succeed in your B-Tech journey.
-
----
-
-## ✨ Features
-
-### 🏠 **Dashboard Home**
-- Clean, modern Swiss-inspired design with glassmorphism effects
-- 3D animated background using Three.js
-- Quick access to all features
-- Responsive layout for all devices
-
-### ✅ **Task Management**
-- Create, edit, and delete tasks
-- Mark tasks as complete/incomplete
-- Real-time task synchronization
-- Persistent storage (MongoDB + localStorage fallback)
-- Guest mode support
-
-### 📝 **Notes System**
-- Rich text note creation and editing
-- Organize notes with titles and content
-- Full CRUD operations
-- Cloud sync with offline support
-- Search and filter capabilities
-
-### 💻 **LeetCode Tracker**
-- Track your daily LeetCode practice
-- Visual heat map showing your consistency
-- Add problems with difficulty levels (Easy, Medium, Hard)
-- View submission history
-- Motivational quotes and stats
-
-### 🎵 **Music Player (Focus Wave)**
-- Built-in music player with curated focus playlists
-- Support for royalty-free music and popular tracks metadata
-- Full playback controls (play, pause, skip, seek)
-- Volume control
-- Create and manage favorites
-- Search functionality
-- Beautiful album art display
-- Responsive design with now-playing view
-
-### 💬 **AI Chatbot**
-- Integrated AI assistant for academic help
-- Real-time chat interface
-- Markdown support for formatted responses
-- Chat history persistence
-- Powered by modern AI APIs
-
-### 📹 **Video Chat (Video Lounge)**
-- WebRTC-based peer-to-peer video calling
-- Multi-party video conferencing
-- Screen sharing capabilities
-- Configurable ICE (STUN/TURN) servers
-- Room-based connections
-- Chat during video calls
-
-### 📅 **Calendar**
-- Monthly calendar view
-- Event management
-- Date highlighting
-- Task integration
-
-### ⏲️ **Pomodoro Timer**
-- Focus timer with customizable intervals
-- Break reminders
-- Session tracking
-- Productivity statistics
-
-### 🎮 **Games**
-- Mini-games for study breaks
-- Stress relief activities
-- Brain teasers and puzzles
-
-### 📄 **Resume Builder**
-- Create professional resumes
-- Multiple templates
-- Export to PDF
-- ATS-friendly formatting
-
-### 🔐 **Authentication**
-- Secure user login/signup
-- JWT-based authentication
-- Guest mode for quick access
-- Protected routes
-
----
-
-## 🛠️ Tech Stack
-
-### **Frontend**
-- **React 18.2** - UI library
-- **TypeScript** - Type-safe development
-- **Vite** - Fast build tool and dev server
-- **Tailwind CSS** - Utility-first styling
-- **Three.js** - 3D graphics and animations
-- **React Three Fiber & Drei** - React renderer for Three.js
-- **Lucide React** - Beautiful icon library
-- **React Router DOM** - Client-side routing
-- **Axios** - HTTP client
-- **Socket.io Client** - Real-time communication
-- **React Markdown** - Markdown rendering
-- **GSAP** - Advanced animations
-- **Zustand** - State management
-
-### **Backend**
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - ODM for MongoDB
-- **Socket.io** - WebSocket server
-- **JWT** - Authentication tokens
-- **bcryptjs** - Password hashing
-- **CORS** - Cross-origin resource sharing
-
-### **DevOps & Deployment**
-- **Docker** - Containerization
-- **Vercel** - Frontend hosting
-- **Render** - Backend hosting
-- **Netlify** - Alternative deployment
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** (v18 or higher)
-- **npm** or **yarn**
-- **MongoDB** (local or Atlas)
-- **Git**
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/ultimate-b-tech-buddy.git
-   cd ultimate-b-tech-buddy
-   ```
-
-2. **Install frontend dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Install backend dependencies**
-   ```bash
-   cd backend
-   npm install
-   cd ..
-   ```
-
-4. **Set up environment variables**
-   
-   Create a `.env` file in the root directory:
-   ```env
-   VITE_API_URL=http://localhost:5000
-   VITE_ICE_SERVERS='[{"urls": "stun:stun.l.google.com:19302"}]'
-   ```
-
-   Create a `.env` file in the `backend` directory:
-   ```env
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/btech-buddy
-   JWT_SECRET=your_super_secret_jwt_key_here
-   NODE_ENV=development
-   ```
-
-5. **Start MongoDB** (if running locally)
-   ```bash
-   mongod
-   ```
-
-6. **Run the application**
-
-   **Development mode (both frontend and backend):**
-   ```bash
-   # Terminal 1 - Backend
-   cd backend
-   npm run dev
-
-   # Terminal 2 - Frontend
-   npm run dev
-   ```
-
-   The frontend will be available at `http://localhost:5173`
-   The backend API will run on `http://localhost:5000`
-
-7. **Build for production**
-   ```bash
-   npm run build
-   npm run preview
-   ```
-
----
-
-## 🔧 Environment Variables
-
-### Frontend (.env)
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_URL` | Backend API URL | `http://localhost:5000` |
-| `VITE_ICE_SERVERS` | WebRTC ICE servers configuration (JSON array) | Google STUN + OpenRelay TURN |
-
-### Backend (backend/.env)
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `PORT` | Server port | No (default: 5000) |
-| `MONGODB_URI` | MongoDB connection string | Yes |
-| `JWT_SECRET` | Secret key for JWT tokens | Yes |
-| `NODE_ENV` | Environment (development/production) | No |
-
-### Video Chat Configuration
-
-The WebRTC video lounge supports configurable ICE (STUN/TURN) servers for reliable connections even behind NAT/firewalls.
-
-Add a JSON array of `RTCIceServer` objects to `VITE_ICE_SERVERS`:
-
-```env
-VITE_ICE_SERVERS='[
-  {"urls": "turn:my-turn.example.com:3478", "username": "user", "credential": "pass"},
-  {"urls": "stun:stun.l.google.com:19302"}
-]'
+```mermaid
+flowchart TD
+  UI["React + TypeScript dashboard"] -->|REST + JWT| API["Node.js + Express API"]
+  UI <-->|Chat and signaling| Socket["Socket.io server"]
+  API --> DB["MongoDB"]
+  Socket --> DB
+  UI <-->|Peer video| Peer["WebRTC peers"]
+  Socket --> FCM["Firebase Cloud Messaging"]
+  FCM --> Worker["Browser service worker"]
 ```
 
-If not provided, the app uses Google's public STUN servers plus OpenRelay's public TURN nodes. For production, use your own TURN credentials (Twilio, Cloudflare, Coturn, etc.).
+Firebase is optional. MongoDB remains the data store and JWT remains the authentication mechanism. Push notifications use generic text rather than exposing message contents.
 
----
+## Technology
 
-## 📁 Project Structure
+| Layer | Tools |
+| --- | --- |
+| Frontend | React, TypeScript, Vite, Tailwind CSS, Axios |
+| Backend | Node.js, Express, Mongoose, JWT, bcrypt |
+| Real-time | Socket.io, WebRTC |
+| Notifications | Firebase Web SDK, Firebase Admin SDK, service worker |
+| UI and graphics | Lucide, Three.js, React Three Fiber, GSAP |
+| Deployment | Docker configuration, Vercel frontend, Render backend |
 
-```
-ultimate-b-tech-buddy/
-├── backend/                    # Backend server
-│   ├── models/                # Mongoose models
-│   │   ├── User.js
-│   │   ├── Task.js
-│   │   ├── Note.js
-│   │   ├── Leetcode.js
-│   │   ├── Song.js
-│   │   └── ChatMessage.js
-│   ├── routes/                # API routes
-│   │   ├── auth.js
-│   │   ├── tasks.js
-│   │   ├── notes.js
-│   │   ├── leetcode.js
-│   │   └── songs.js
-│   ├── middleware/            # Custom middleware
-│   │   └── auth.js
-│   ├── scripts/               # Utility scripts
-│   │   └── clear_chat.js
-│   ├── server.js              # Entry point
-│   ├── package.json
-│   └── Dockerfile
-├── src/                       # Frontend source
-│   ├── components/            # React components
-│   │   ├── Features/         # Feature components
-│   │   │   ├── Home.tsx
-│   │   │   ├── Tasks.tsx
-│   │   │   ├── Notes.tsx
-│   │   │   ├── LeetCode.tsx
-│   │   │   ├── Spotify.tsx
-│   │   │   ├── Chat.tsx
-│   │   │   ├── Chatbot.tsx
-│   │   │   ├── VideoChat.tsx
-│   │   │   ├── Calendar.tsx
-│   │   │   ├── Timer.tsx
-│   │   │   ├── Games.tsx
-│   │   │   └── Resume.tsx
-│   │   ├── Layout/           # Layout components
-│   │   │   ├── Dashboard.tsx
-│   │   │   └── Sidebar.tsx
-│   │   ├── UI/               # Reusable UI components
-│   │   ├── Background.tsx
-│   │   ├── HeatMap.tsx
-│   │   └── LoginForm.tsx
-│   ├── lib/                  # Utilities
-│   │   └── api.ts           # API client
-│   ├── assets/              # Static assets
-│   ├── App.tsx              # Root component
-│   ├── main.tsx             # Entry point
-│   └── index.css            # Global styles
-├── public/                   # Public assets
-├── .env                      # Frontend environment variables
-├── package.json             # Frontend dependencies
-├── tsconfig.json            # TypeScript config
-├── tailwind.config.js       # Tailwind configuration
-├── vite.config.ts           # Vite configuration
-├── Dockerfile               # Docker configuration
-├── render.yaml              # Render deployment config
-├── netlify.toml             # Netlify deployment config
-└── README.md                # You are here!
+## Run locally
+
+Use Node.js 22 or later for the current Firebase dependencies, npm and a MongoDB database. If your Node version manager follows the legacy `.nvmrc`, select Node.js 22 explicitly before installing.
+
+```bash
+git clone https://github.com/Dhanvin1520/CollabForge.git
+cd CollabForge
+npm install
+cd backend
+npm install
+cd ..
 ```
 
----
+Create a root `.env`:
 
-## 🔌 API Endpoints
+```dotenv
+VITE_API_URL=http://localhost:5000/api
+VITE_SOCKET_URL=http://localhost:5000
+# Optional: enables the AI assistant
+VITE_GEMINI_API_KEY=your-development-key
+```
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-- `GET /api/auth/me` - Get current user
+Create `backend/.env`:
 
-### Tasks
-- `GET /api/tasks` - Get all tasks
-- `POST /api/tasks` - Create new task
-- `PUT /api/tasks/:id` - Update task
-- `DELETE /api/tasks/:id` - Delete task
+```dotenv
+PORT=5000
+MONGODB_URI=mongodb://127.0.0.1:27017/collabforge
+JWT_SECRET=replace-with-a-long-random-secret
+FRONTEND_URL=http://localhost:5173
+```
 
-### Notes
-- `GET /api/notes` - Get all notes
-- `POST /api/notes` - Create new note
-- `PUT /api/notes/:id` - Update note
-- `DELETE /api/notes/:id` - Delete note
+Start the backend in one terminal:
 
-### LeetCode
-- `GET /api/leetcode` - Get all submissions
-- `POST /api/leetcode` - Add new submission
-- `DELETE /api/leetcode/:id` - Delete submission
+```bash
+cd backend
+npm run dev
+```
 
-### Songs (Favorites)
-- `GET /api/songs` - Get favorite songs
-- `POST /api/songs` - Add to favorites
-- `DELETE /api/songs/:id` - Remove from favorites
+Start the frontend in a second terminal, from the repository root:
 
----
+```bash
+npm run dev
+```
 
-## 🎨 Features Showcase
+Open the URL printed by Vite. Backend health is available at `http://localhost:5000/api/health`.
 
-### Swiss Design Aesthetics
-- Clean, minimalist interface
-- Grid-based layouts
-- Typography-focused design
-- Subtle animations and transitions
-- Glassmorphism effects
-- Dark/Light mode support
+`VITE_` variables are bundled into the browser. The existing Gemini integration calls the provider from the browser; use a restricted development key and move provider calls behind your backend before exposing a private production credential. Firebase Admin private keys belong only on the backend.
 
-### Performance Optimizations
-- Code splitting and lazy loading
-- Optimized bundle size
-- Efficient state management
-- Debounced search and inputs
-- Memoized components
-- Service worker for offline support
+## Firebase notifications
 
-### Responsive Design
-- Mobile-first approach
-- Tablet and desktop optimized
-- Touch-friendly controls
-- Adaptive layouts
+Follow [Firebase setup and verification](docs/firebase-notifications.md) for frontend configuration, the public VAPID key and backend Admin credentials.
 
----
+- Signed-in users opt into alerts for one public chat room per browser.
+- Persisted messages from authenticated users can trigger background alerts; the sender is excluded.
+- Users can disable alerts. Signing out also removes/revokes the browser subscription.
+- Invalid registrations are cleaned up; inactive server records expire after 30 days.
+- Without Firebase settings, chat still works and notification controls remain hidden.
 
-## 🤝 Contributing
+**Status:** integration code and automated tests are included. Live delivery requires deployment configuration and the two-user verification steps in the setup guide; it is not claimed as verified here.
 
-Contributions are welcome! Please follow these steps:
+## Build and checks
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add some amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
+From the repository root:
 
-### Development Guidelines
-- Follow the existing code style
-- Write meaningful commit messages
-- Add comments for complex logic
-- Test your changes thoroughly
-- Update documentation as needed
+```bash
+npm run build
+npm run type-check
+node --test backend/tests/notifications.test.js
+```
 
----
+The notification tests check validation, permanent-token error handling, disabled configuration, JWT enforcement and ownership-scoped writes using mocked database operations. They do not replace a live Firebase delivery test.
 
-## 📝 License
+## Repository layout
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| Path | Purpose |
+| --- | --- |
+| `src/components/Features/` | Chat, video, tasks, notes and study-tool interfaces |
+| `src/components/Layout/` | Dashboard and navigation |
+| `src/lib/` | API client and Firebase notification client |
+| `backend/routes/` | Authentication, study tools and notification endpoints |
+| `backend/models/` | MongoDB schemas |
+| `backend/services/push.js` | Firebase Admin notification delivery |
+| `backend/server.js` | Express application and Socket.io handlers |
+| `backend/tests/` | Notification regression tests |
+| `public/firebase-messaging-sw.js` | Background notification worker |
+| `docs/firebase-notifications.md` | Notification setup and manual verification |
 
----
+## Deployment notes
 
-## 👨‍💻 Author
+- Configure frontend API/socket URLs in Vercel and backend MongoDB/JWT settings in Render.
+- Run the backend from `backend/` with `node server.js`, or from the repository root with `node backend/server.js`.
+- Set `FRONTEND_URL` and, when needed, comma-separated `CORS_EXTRA_ORIGINS` for the deployed frontend.
+- Browser push requires HTTPS outside localhost. Video connectivity across networks may require your own TURN service.
+- Existing hosting addresses and infrastructure identifiers are retained so the branding update does not disconnect deployments.
 
-**Dhanvin**
+## Contributing
 
----
-
-## 🙏 Acknowledgments
-
-- Icons by [Lucide](https://lucide.dev/)
-- Music samples from [Bensound](https://www.bensound.com/)
-- 3D graphics powered by [Three.js](https://threejs.org/)
-- Design inspiration from Swiss design principles
-- Open source community
-
----
-
-## 📞 Support
-
-If you have any questions or need help, feel free to:
-- Open an issue
-- Contact via email
-- Join our Discord community
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Dark/Light theme toggle
-- [ ] Mobile app (React Native)
-- [ ] More AI features
-- [ ] Collaboration features
-- [ ] Integration with university portals
-- [ ] Advanced analytics dashboard
-- [ ] Export/Import data
-- [ ] Social features
-
----
-
-<div align="center">
-
-**Made with ❤️ for B-Tech students everywhere**
-
-⭐ Star this repo if you find it helpful!
-
-</div>
-
-## Optional Firebase Chat Notifications
-
-Opt-in browser notifications for signed-in users in public chat rooms, backed by Firebase Cloud Messaging and the existing Node.js/MongoDB API. Requires Firebase configuration before live delivery. See [setup and verification](docs/firebase-notifications.md).
+Open an issue describing the change or submit a focused pull request. Include the checks you ran and screenshots for interface changes. Never commit credentials or `.env` files.
